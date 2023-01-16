@@ -1,0 +1,4 @@
+,RS Pyramidal,RS Inhibitory,FS,RS Pyramidal +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,RS Inhibitory +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,FS +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,Cb stellate,Cb stellate +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,Cb stellate $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,STN,STN +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$,STN $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$
+spike_ind,0.3,0.04375,0.25,0.3,0.0875,0.25,0.3,0.65,0.375,0.125,0.475,0.4
+ramp_up,0.093670234,0.024270811,0.117710294,0.219603049,0.07216668,0.184737962,0.282068205,0.605681514,0.612299031,0.138345346,0.681461704,0.617664044
+ramp_down,0.179122948,0.023394058,0.178617947,0.245078113,0.078058945,0.221655554,0.250060625,0.61986655,0.27187818,0.057037643,0.449511124,0.351675879
