@@ -200,7 +200,7 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=2.2):
         ax.plot([lim[0], lim[1]], [1, 1], ':k',linewidth=hlinewidth)
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         ax.set_title("Shift ($\Delta V_{1/2}$)", y=1.05)
-        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'K \nactivation', '$K_V1.1$ \nactivation',
+        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'Kd \nactivation', '$K_V1.1$ \nactivation',
                             '$K_V1.1$ \ninactivation', 'A \nactivation', 'A \ninactivation'])
     elif alteration=='slope':
         i = 4  # Kv1.1 inact
@@ -218,7 +218,7 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=2.2):
         ax.plot([lim[0], lim[1]], [1, 1], ':k',linewidth=hlinewidth)
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         ax.set_title("Slope (k)", y=1.05)
-        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'K \nactivation', '$K_V1.1$ \nactivation',
+        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'Kd \nactivation', '$K_V1.1$ \nactivation',
                             '$K_V1.1$ \ninactivation', 'A \nactivation', 'A \ninactivation'])
     elif alteration=='g':
         i = 4  # Leak
@@ -235,7 +235,8 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=2.2):
         ax.plot([lim[0], lim[1]], [1, 1], ':k',linewidth=hlinewidth)
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         ax.set_title("Conductance (g)", y=1.05)
-        ax.set_xticklabels(textwrap.fill(x.get_text(), max_width) for x in ax.get_xticklabels())
+        # ax.set_xticklabels(textwrap.fill(x.get_text(), max_width) for x in ax.get_xticklabels())
+        ax.set_xticklabels(['Na', 'Kd', '$K_V1.1$', 'A', 'Leak'])
     else:
         print('Please chose "shift", "slope" or "g"')
     ax.get_legend().remove()

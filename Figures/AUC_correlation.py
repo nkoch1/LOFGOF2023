@@ -199,7 +199,7 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=3):
         ax.plot([lim[0], lim[1]], [1, 1], ':k',linewidth=hlinewidth)
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         ax.set_title("Shift ($\Delta V_{1/2}$)", y=1.05)
-        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'K \nactivation', '$K_V1.1$ \nactivation',
+        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'Kd \nactivation', '$K_V1.1$ \nactivation',
                             '$K_V1.1$ \ninactivation', 'A \nactivation', 'A \ninactivation'])
     elif alteration=='slope':
         i = 3  # Kv1.1 act
@@ -217,7 +217,7 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=3):
         ax.plot([lim[0], lim[1]], [1, 1], ':k',linewidth=hlinewidth)
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         ax.set_title("Slope (k)", y=1.05)
-        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'K \nactivation', '$K_V1.1$ \nactivation',
+        ax.set_xticklabels(['Na \nactivation', 'Na \ninactivation', 'Kd \nactivation', '$K_V1.1$ \nactivation',
                             '$K_V1.1$ \ninactivation', 'A \nactivation', 'A \ninactivation'])
     elif alteration=='g':
         i = 1  # Kd
@@ -236,7 +236,8 @@ def corr_with_markers(ax,max_width, alteration='shift', msize=3):
         ax.plot([lim[0], lim[1]], [-1, -1], ':k',linewidth=hlinewidth)
         # Tweak the visual presentation
         ax.set_title("Conductance (g)", y=1.05)
-        ax.set_xticklabels(textwrap.fill(x.get_text(), max_width) for x in ax.get_xticklabels())
+        # ax.set_xticklabels(textwrap.fill(x.get_text(), max_width) for x in ax.get_xticklabels())
+        ax.set_xticklabels(['Na', 'Kd', '$K_V1.1$', 'A', 'Leak'])
     else:
         print('Please chose "shift", "slope" or "g"')
     ax.get_legend().remove()
@@ -292,7 +293,7 @@ def model_legend(ax, marker_s_leg, pos, ncol):
     FS_Kv = mlines.Line2D([], [], color='#F78017', marker="D", markersize=marker_s_leg, linestyle='None', label='Model G')
     Cb = mlines.Line2D([], [], color='#40A787', marker="o", markersize=marker_s_leg, linestyle='None', label='Model A')
     Cb_pl = mlines.Line2D([], [], color='#008797', marker="^", markersize=marker_s_leg, linestyle='None', label='Model F')
-    Cb_sw = mlines.Line2D([], [], color='#2060A7', marker="s", markersize=marker_s_leg, linestyle='None', abel='Model J')
+    Cb_sw = mlines.Line2D([], [], color='#2060A7', marker="s", markersize=marker_s_leg, linestyle='None', label='Model J')
     STN = mlines.Line2D([], [], color='#D03050', marker="s", markersize=marker_s_leg, linestyle='None', label='Model L')
     STN_pl = mlines.Line2D([], [], color='#53379B', marker="D", markersize=marker_s_leg, linestyle='None', label='Model I')
     STN_sw = mlines.Line2D([], [], color='#873770', marker="s", markersize=marker_s_leg, linestyle='None', label='Model K')
