@@ -179,7 +179,7 @@ models = ['Cb stellate', 'RS Inhibitory', 'FS', 'RS Pyramidal', 'RS Inhibitory +
           'RS Pyramidal +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$', 'STN +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'Cb stellate $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'STN $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$', 'STN']
-fig, axs = plt.subplots(4, 3, figsize=cm2inch(17.2, 20))  # ,  sharey=True)
+fig, axs = plt.subplots(4, 3, figsize=cm2inch(20, 20))  # ,  sharey=True)
 plt.subplots_adjust(hspace=1.5, wspace=1.0)
 let_x = -0.6
 let_y = 1.2

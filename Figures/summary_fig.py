@@ -204,7 +204,7 @@ import matplotlib.image as mpimg
 img = mpimg.imread('./Figures/summary_diagram.png')
 inset_ylim = (0, 100)
 lfsize = 7
-fig = plt.figure(figsize=cm2inch(17.2, 12))
+fig = plt.figure(figsize=cm2inch(23, 15))
 gs = gridspec.GridSpec(15, 3, top=0.95, bottom=0.1, left=0.15, right=0.95, hspace=0.4, wspace=0.2)
 
 ax1 = fig.add_subplot(gs[1:4,2])
