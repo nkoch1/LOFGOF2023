@@ -172,39 +172,53 @@ def plot_fI(ax, model='RS Pyramidal'):
 
 # plot layout
 fig = plt.figure()
-gs0 = fig.add_gridspec(3, 2, wspace=0.3, hspace=0)
-gs00 = gs0[:,0].subgridspec(6, 3, wspace=1.5, hspace=1.5)
-gs01 = gs0[:,1].subgridspec(6, 3, wspace=1.2, hspace=1.3)
+gs0 = fig.add_gridspec(3, 3, wspace=0.4, hspace=0.2)
+
+gs00 = gs0[:,0].subgridspec(5, 3, wspace=1.8, hspace=1.5)
+gs01 = gs0[:,1].subgridspec(5, 3, wspace=1.8, hspace=1.5)
+gs02 = gs0[:,2].subgridspec(5, 3, wspace=1.8, hspace=1.5)
+
+ax_diag = fig.add_subplot(gs02[2:, :])
+import matplotlib.image as mpimg
+img = mpimg.imread('./Figures/model_diagram.png')
+ax_diag.imshow(img)
+ax_diag.spines['top'].set_visible(False)
+ax_diag.spines['bottom'].set_visible(False)
+ax_diag.spines['left'].set_visible(False)
+ax_diag.spines['right'].set_visible(False)
+ax_diag.set_yticks([])
+ax_diag.set_xticks([])
+ax_diag.text(-0.12, 1.075, string.ascii_uppercase[12], transform=ax_diag.transAxes, size=10, weight='bold')
 
 ax1_spikes = fig.add_subplot(gs00[0,0:2])
 ax1_fI = fig.add_subplot(gs00[0, 2])
 ax2_spikes = fig.add_subplot(gs01[0,0:2])
 ax2_fI = fig.add_subplot(gs01[0, 2])
-ax3_spikes = fig.add_subplot(gs00[1,0:2])
-ax3_fI = fig.add_subplot(gs00[1, 2])
-ax4_spikes = fig.add_subplot(gs01[1,0:2])
-ax4_fI = fig.add_subplot(gs01[1, 2])
-ax5_spikes = fig.add_subplot(gs00[2, 0:2])
-ax5_fI = fig.add_subplot(gs00[2,  2])
-ax6_spikes = fig.add_subplot(gs01[2, 0:2])
-ax6_fI = fig.add_subplot(gs01[2,  2])
-ax7_spikes = fig.add_subplot(gs00[3,0:2])
-ax7_fI = fig.add_subplot(gs00[3, 2])
-ax8_spikes = fig.add_subplot(gs01[3,0:2])
-ax8_fI = fig.add_subplot(gs01[3, 2])
-ax9_spikes = fig.add_subplot(gs00[4,0:2])
-ax9_fI = fig.add_subplot(gs00[4, 2])
-ax10_spikes = fig.add_subplot(gs01[4,0:2])
-ax10_fI = fig.add_subplot(gs01[4, 2])
-ax11_spikes = fig.add_subplot(gs00[5,0:2])
-ax11_fI = fig.add_subplot(gs00[5, 2])
-ax12_spikes = fig.add_subplot(gs01[5,0:2])
-ax12_fI = fig.add_subplot(gs01[5, 2])
+ax3_spikes = fig.add_subplot(gs02[0,0:2])
+ax3_fI = fig.add_subplot(gs02[0, 2])
+ax4_spikes = fig.add_subplot(gs00[1,0:2])
+ax4_fI = fig.add_subplot(gs00[1, 2])
+ax5_spikes = fig.add_subplot(gs01[1, 0:2])
+ax5_fI = fig.add_subplot(gs01[1,  2])
+ax6_spikes = fig.add_subplot(gs02[1,0:2])
+ax6_fI = fig.add_subplot(gs02[1, 2])
+ax7_spikes = fig.add_subplot(gs00[2,0:2])
+ax7_fI = fig.add_subplot(gs00[2, 2])
+ax8_spikes = fig.add_subplot(gs01[2,0:2])
+ax8_fI = fig.add_subplot(gs01[2, 2])
+ax9_spikes = fig.add_subplot(gs00[3,0:2])
+ax9_fI = fig.add_subplot(gs00[3, 2])
+ax10_spikes = fig.add_subplot(gs01[3,0:2])
+ax10_fI = fig.add_subplot(gs01[3, 2])
+ax11_spikes = fig.add_subplot(gs00[4,0:2])
+ax11_fI = fig.add_subplot(gs00[4, 2])
+ax12_spikes = fig.add_subplot(gs01[4, 0:2])
+ax12_fI = fig.add_subplot(gs01[4,  2])
 
 spike_axs = [ax1_spikes, ax2_spikes, ax3_spikes, ax4_spikes, ax5_spikes,ax6_spikes, ax7_spikes, ax8_spikes,
-             ax9_spikes, ax10_spikes, ax11_spikes, ax12_spikes]#, ax13_spikes, ax14_spikes]
-fI_axs = [ax1_fI, ax2_fI, ax3_fI, ax4_fI, ax5_fI,ax6_fI, ax7_fI, ax8_fI, ax9_fI,  ax10_fI,
-             ax11_fI, ax12_fI] #, ax13_fI, ax14_fI]
+              ax11_spikes,ax9_spikes,ax10_spikes,   ax12_spikes]#, ax13_spikes, ax14_spikes]
+fI_axs = [ax1_fI, ax2_fI, ax3_fI, ax4_fI, ax5_fI,ax6_fI, ax7_fI,  ax8_fI, ax11_fI, ax9_fI,  ax10_fI,
+              ax12_fI] #, ax13_fI, ax14_fI]
 
 # model order
 models = ['Cb stellate','RS Inhibitory','FS', 'RS Pyramidal','RS Inhibitory +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
@@ -219,19 +233,22 @@ for i in range(len(models)):
     plot_fI(fI_axs[i], model=models[i])
 
 # add scalebars
+add_scalebar(ax6_spikes, matchx=False, matchy=False, hidex=True, hidey=True, sizex=100, sizey=50, labelx='100\u2009ms',
+                 labely='50\u2009mV', loc=3, pad=-0.5, borderpad=-1.0, barwidth=2, bbox_to_anchor=Bbox.from_bounds(-0.275, -0.05, 1, 1),
+                          bbox_transform=ax6_spikes.transAxes)
 add_scalebar(ax11_spikes, matchx=False, matchy=False, hidex=True, hidey=True, sizex=100, sizey=50, labelx='100\u2009ms',
-                 labely='50\u2009mV', loc=3, pad=-0.5, borderpad=-1.0, barwidth=2, bbox_to_anchor=Bbox.from_bounds(-0.2, -0.05, 1, 1),
+                 labely='50\u2009mV', loc=3, pad=-0.5, borderpad=-1.0, barwidth=2, bbox_to_anchor=Bbox.from_bounds(-0.275, -0.05, 1, 1),
                           bbox_transform=ax11_spikes.transAxes)
 add_scalebar(ax12_spikes, matchx=False, matchy=False, hidex=True, hidey=True, sizex=100, sizey=50, labelx='100\u2009ms',
-                 labely='50\u2009mV', loc=3, pad=-0.5, borderpad=-1.0, barwidth=2, bbox_to_anchor=Bbox.from_bounds(-0.2, -0.05, 1, 1),
+                 labely='50\u2009mV', loc=3, pad=-0.5, borderpad=-1.0, barwidth=2, bbox_to_anchor=Bbox.from_bounds(-0.275, -0.05, 1, 1),
                           bbox_transform=ax12_spikes.transAxes)
 # add subplot labels
 for i in range(0,len(models)):
-    spike_axs[i].text(-0.18, 1.2, string.ascii_uppercase[i], transform=spike_axs[i].transAxes, size=10, weight='bold')
+   spike_axs[i].text(-0.22, 1.2, string.ascii_uppercase[i], transform=spike_axs[i].transAxes, size=10, weight='bold')
+
 # save
-fig.set_size_inches(cm2inch(17.6,20))
-fig.savefig('./Figures/diversity_in_firing.pdf', dpi=fig.dpi)
-# fig.savefig('./Figures/diversity_in_firing.png', dpi=fig.dpi) #png
+fig.set_size_inches(cm2inch(21,15))
+fig.savefig('./Figures/diversity_in_firing.jpg', dpi=300, bbox_inches='tight') #pdf # eps
 plt.show()
 
 

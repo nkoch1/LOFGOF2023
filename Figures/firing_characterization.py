@@ -199,24 +199,6 @@ def lighter(color, lightness):
             return to_hex((rl, gl, bl)).upper()
                 
 
-def plot_sqrt(ax, a=1, b=0.2, c=100, d=0):
-    '''
-    Parameters
-    ----------
-    markers
-
-    Returns
-    -------
-
-    '''
-    x = np.linspace(0, 1, 10000)
-    y = c*np.sqrt(a*(x - b)) + d
-    ax.plot(x, y)
-    ax.set_xlabel('Current [nA]')
-    ax.set_ylabel('Frequency [Hz]')
-    ax.set_xlim(0,1)
-    ax.set_ylim(0, ax.get_ylim()[1])
-
 def plot_AUC(ax, a=1, b=0.2, c=180, d=0, width=0.2):
     '''
 
