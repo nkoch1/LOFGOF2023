@@ -5,7 +5,8 @@ import string
 from plotstyle import scheme_style
 import pandas as pd
 from matplotlib import cm
-
+from matplotlib.ticker import ScalarFormatter
+import matplotlib.ticker
 def cm2inch(*tupl):
     inch = 2.54
     if isinstance(tupl[0], tuple):
@@ -112,36 +113,10 @@ def show_spines(ax, spines='lrtb'):
                 ax.yaxis.set_label_position('left')
 
 def plot_g(ax, df, models, i, let_x, let_y, titlesize=10, letsize=12):
-    '''
-            Plot the g_max values from df
-
-                Parameters
-                ----------
-                ax : matplotlib axis
-                    axis to plot spike train on
-                d : dataframe
-                    dataframe wit data
-                models : list
-                    model list (used to get column i)
-                i : int
-                    column of dataframe to plot
-                let_x: float
-                    x shift of subplot letter
-                let_y: float
-                    y shift of subplot letter
-                titlesize: int
-                    font size of title
-                letsize: int
-                    font size of subplot letter
-                Returns
-                -------
-                ax : matplotlib axis
-                    updated axis with plot data
-            '''
-
     c = [cm.gray(x) for x in np.linspace(0., 0.75, 9)]
     myorder = [0, 4, 1, 6, 2,7, 3,8]
     colors = [c[i] for i in myorder]
+    ax.set_ylim(0.01, 60)
     df.plot.bar(y=models[i], rot=90, ax=ax, legend=False,
                 ylabel='$\mathrm{g}_{\mathrm{max}}$ [$\mathrm{mS}/ \mathrm{cm}^2$]',
                 color=colors)
@@ -150,9 +125,14 @@ def plot_g(ax, df, models, i, let_x, let_y, titlesize=10, letsize=12):
     ax.text(let_x, let_y, string.ascii_uppercase[i], transform=ax.transAxes, size=letsize, weight='bold')
     ax.set_yscale('log')
     ax.set_xlim(-0.5, 9)
-    from matplotlib.ticker import ScalarFormatter
+
     for axis in [ax.yaxis]:
         axis.set_major_formatter(ScalarFormatter())
+    ax.set_yticks([0.1,1.0, 10])
+    locmin = matplotlib.ticker.LogLocator(base=10.0, subs=(0.1, 0.2, 0.4, 0.6, 0.8, 1, 2, 4, 6, 8, 10), numticks=100)
+    ax.yaxis.set_minor_locator(locmin)
+    ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax.yaxis.set_tick_params(labelleft= True)
     return ax
 
 
@@ -173,13 +153,15 @@ df = pd.DataFrame({'RS Pyramidal': [56, 6, 0, 0, 0.075, 0, 0, 0, 0.0205],
                    'STN $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$': [49, 57, 0.5, 0, 0, 5, 5, 1, 0.035]},
                   index=index)
 
+
+#% with legend
 scheme_style()
 models = ['Cb stellate', 'RS Inhibitory', 'FS', 'RS Pyramidal', 'RS Inhibitory +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'Cb stellate +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$', 'FS +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'RS Pyramidal +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$', 'STN +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'Cb stellate $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
           'STN $\Delta$$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$', 'STN']
-fig, axs = plt.subplots(4, 3, figsize=cm2inch(20, 20))  # ,  sharey=True)
+fig, axs = plt.subplots(4, 3, figsize=cm2inch(20, 20))
 plt.subplots_adjust(hspace=1.5, wspace=1.0)
 let_x = -0.6
 let_y = 1.2

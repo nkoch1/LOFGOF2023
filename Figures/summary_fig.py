@@ -130,26 +130,91 @@ def show_spines(ax, spines='lrtb'):
                 ax.yaxis.set_label_position('left')
 
 
+def lighter(color, lightness):
+    """ Make a color lighter.
+
+    From github.com/janscience/plottools.git  colors.py
+
+    ![lighter](figures/colors-lighter.png)
+
+    Parameters
+    ----------
+    color: dict or matplotlib color spec
+        A matplotlib color (hex string, name color string, rgb tuple)
+        or a dictionary with an 'color' or 'facecolor' key.
+    lightness: float
+        The smaller the lightness, the lighter the returned color.
+        A lightness of 0 returns white.
+        A lightness of 1 leaves the color untouched.
+        A lightness of 2 returns black.
+
+    Returns
+    -------
+    color: string or dict
+        The lighter color as a hexadecimal RGB string (e.g. '#rrggbb').
+        If `color` is a dictionary, a copy of the dictionary is returned
+        with the value of 'color' or 'facecolor' set to the lighter color.
+
+    Examples
+    --------
+    For 40% lightness of blue do
+    ```py
+    import plottools.colors as c
+    colors = c.palettes['muted']
+    lightblue = c.lighter(colors['blue'], 0.4)
+    ```
+    """
+    try:
+        c = color['color']
+        cd = dict(**color)
+        cd['color'] = lighter(c, lightness)
+        return cd
+    except (KeyError, TypeError):
+        try:
+            c = color['facecolor']
+            cd = dict(**color)
+            cd['facecolor'] = lighter(c, lightness)
+            return cd
+        except (KeyError, TypeError):
+            if lightness > 2:
+                lightness = 2
+            if lightness > 1:
+                return darker(color, 2.0 - lightness)
+            if lightness < 0:
+                lightness = 0
+            r, g, b = cc.to_rgb(color)
+            rl = r + (1.0 - lightness) * (1.0 - r)
+            gl = g + (1.0 - lightness) * (1.0 - g)
+            bl = b + (1.0 - lightness) * (1.0 - b)
+            return to_hex((rl, gl, bl)).upper()
+
+
+def plot_sqrt(ax, a=1, b=0.2, c=100, d=0):
+    x = np.linspace(0, 1, 10000)
+    y = c * np.sqrt(a * (x - b)) + d
+    ax.plot(x, y)
+    ax.set_xlabel('Current [nA]')
+    ax.set_ylabel('Frequency [Hz]')
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, ax.get_ylim()[1])
+
+
+def plot_AUC(ax, a=1, b=0.2, c=180, d=0, width=0.2):
+    x = np.linspace(0, 1, 1000)
+    y = c * np.sqrt(a * (x - b)) + d
+    ax.plot(x, y, colorslist[9])
+    ax.set_xlabel('Current [nA]')
+    ax.set_ylabel('Frequency [Hz]')
+    ax.fill_between(x, y, where=(x <= b + width), color=lighter(colorslist[9], 0.3))
+    ax.text(0.3, 15, 'AUC', ha='center')
+    ax.annotate('', (0.2, 10), (0, 10), arrowprops=dict(arrowstyle="<->"))
+    ax.text(0.1, 20, 'rheobase', ha='center')
+    ax.set_xlim(0, 0.5)
+    ax.set_ylim(0, 100)
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(50))
+
+
 def plot_diff_sqrt(ax, a=1, b=0.2, c=100, d=0, a2=1, b2=0.2, c2=100, d2=0):
-    '''
-        plot 2 square root functions:
-        c*np.sqrt(a*(x - b)) + d
-        c2*np.sqrt(a2*(x - b2)) + d2
-
-        Parameters
-        ----------
-        ax : matplotlib axis
-            axis to plot legend on
-        a : float
-        b : float
-        c : float
-        d : float
-        a2 : float
-        b2 : float
-        c2 : float
-        d2 : float
-
-        '''
     show_spines(ax, 'lb')
     x = np.linspace(0, 1, 10000)
     y = c * np.sqrt(a * (x - b)) + d
@@ -164,28 +229,32 @@ def plot_diff_sqrt(ax, a=1, b=0.2, c=100, d=0, a2=1, b2=0.2, c2=100, d2=0):
     ax.set_ylabel('Frequency')
 
 
+def plot_quadrant(ax):
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+    ax.text(1.2, -0.15, '$\\Delta$ rheobase', ha='right')
+    ax.text(-0.03, 0.7, '$\\Delta$ AUC', ha='right', rotation=90)
+    ax.tick_params(length=0)
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    ax.annotate('', (1, 0), (-1, 0), arrowprops=dict(arrowstyle="->"))
+    ax.annotate('', (0, 1), (0, -1), arrowprops=dict(arrowstyle="->"))
+    ax.set_xticks([-0.5, 0.5])
+    a = ax.get_xticks().tolist()
+    a[0] = '\u2212'
+    a[1] = '+'
+    ax.set_xticklabels(a)
+    ax.set_yticks([-0.5, 0.5])
+    b = ax.get_xticks().tolist()
+    b[0] = '\u2212'
+    b[1] = '+'
+    ax.set_yticklabels(b)
+
 def plot_g(ax, df, i):
-    '''
-        Plot the g_max values from df
-
-            Parameters
-            ----------
-            ax : matplotlib axis
-                axis to plot spike train on
-            d : dataframe
-                dataframe wit data
-            i : key
-                column of dataframe to plot
-
-            Returns
-            -------
-            ax : matplotlib axis
-                updated axis with plot data
-        '''
     tab10 = [cm.tab10(x) for x in np.linspace(0., 1, 10)]
     Accent = [cm.Accent(x) for x in np.linspace(0., 1, 8)]
     colors = [colorslist[2], Accent[7], tab10[4], 'limegreen', tab10[5], tab10[9], tab10[1], 'fuchsia']
-    df.plot.bar(y=i, rot=90, ax=ax, legend=False, color=colors, ylabel='$\mathrm{g}_{\mathrm{max}}$')
+    df.plot.bar(y=i, rot=90, ax=ax, legend=False, color=colors, ylabel='$\mathrm{g}_{\mathrm{max}}$', width=0.75)
     show_spines(ax, spines='lb')
     ax.set_xticks([])
     ax.set_yticks([])
@@ -225,9 +294,9 @@ axin3 = plot_g(axin3, df, 3)
 plot_diff_sqrt(ax1, b2=0.06, c2=65)
 ax1.set_ylim(inset_ylim)
 ax1.annotate('', (0.225, 7), (0.07, 7),
-                arrowprops=dict(arrowstyle="<|-", color=colorslist[2], lw=0.5, mutation_scale=5), zorder=-10)
+                arrowprops=dict(arrowstyle="<|-", color=colorslist[2], lw=0.5, mutation_scale=5), zorder=-10)  #
 ax1.annotate('', (0.8, 80), (0.85, 55),
-                arrowprops=dict(arrowstyle="<|-", color=colorslist[2], lw=0.5, mutation_scale=5), zorder=-10)
+                arrowprops=dict(arrowstyle="<|-", color=colorslist[2], lw=0.5, mutation_scale=5), zorder=-10)  #
 ax1.text(x=0.85, y=90, s='WT',color=colorslist[9],rotation=17.5, fontsize=lfsize, weight='bold')
 ax1.text(x=0.75, y=37.5, s='Mutant',color=colorslist[2],rotation=10, fontsize=lfsize, weight='bold')
 
