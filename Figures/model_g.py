@@ -1,8 +1,16 @@
+"""
+Script to plot model conductances - Figure 2
+
+"""
+__author__ = "Nils A. Koch"
+__copyright__ = "Copyright 2022, Nils A. Koch"
+__license__ = "MIT"
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import string
-from plotstyle import scheme_style
+from Figures.plotstyle import scheme_style
 import pandas as pd
 from matplotlib import cm
 from matplotlib.ticker import ScalarFormatter
@@ -181,6 +189,6 @@ axs[3, 1] = plot_g(axs[3, 1], df, models, 10, let_x, let_y, titlesize=titlesize,
 axs[3, 2] = plot_g(axs[3, 2], df, models, 11, let_x, let_y, titlesize=titlesize, letsize=letsize)
 
 # save
-fig.savefig('./Figures/model_g.jpg', dpi=300, bbox_inches='tight')  # pdf # eps
+fig.savefig('./Figures/model_g.tif', dpi=600, bbox_inches='tight')  # pdf # eps
 plt.show()
 

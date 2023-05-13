@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Script to plot rheobase correlations - Figure 4
+Script to plot rheobase correlations - Figure 5
 
 """
 __author__ = "Nils A. Koch"
@@ -564,7 +564,7 @@ ax2.text(-0.075, 1.35, string.ascii_uppercase[8], transform=ax2.transAxes, size=
 
 # save
 fig.set_size_inches(cm2inch(20.75,12))
-fig.savefig('./Figures/rheobase_correlation.pdf', dpi=fig.dpi)
+fig.savefig('./Figures/rheobase_correlation.tif', dpi=600)
 # fig.savefig('./Figures/rheobase_correlation.png', dpi=fig.dpi)
 plt.show()
 

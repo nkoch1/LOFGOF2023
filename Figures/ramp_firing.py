@@ -1,5 +1,5 @@
 """
-Script to plot ramp protocol and responses of each model to ramp - Figure 2-1
+Script to plot ramp protocol and responses of each model to ramp - Figure S1
 
 """
 __author__ = "Nils A. Koch"
@@ -205,7 +205,7 @@ for i in range(0,len(models)):
 
 #save
 fig.set_size_inches(cm2inch(17.6,22))
-fig.savefig('./Figures/ramp_firing.pdf', dpi=fig.dpi)
+fig.savefig('./Figures/ramp_firing.tif', dpi=600)
 # fig.savefig('./Figures/ramp_firing.png', dpi=fig.dpi)
 plt.show()
 

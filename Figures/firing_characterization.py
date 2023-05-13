@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Script to plot illustrate AUC and rheobase firing characterization - Figure 2
+Script to plot illustrate AUC and rheobase firing characterization - Figure 3
 
 """
 __author__ = "Nils A. Koch"
@@ -14,7 +14,7 @@ import matplotlib.ticker as ticker
 from matplotlib.colors import colorConverter as cc
 from matplotlib.colors import to_hex
 import string
-from plotstyle import scheme_style
+from Figures.plotstyle import scheme_style
 
 colorslist = ['#40A787',  # cyan'#
               '#F0D730',  # yellow
@@ -351,5 +351,5 @@ ax3_BR.annotate('', (0.7, 75), (0.8, 37.5), arrowprops=dict(arrowstyle="<|-", co
 
 
 fig.set_size_inches(cm2inch(8.5,12))
-fig.savefig('./Figures/firing_characterization.png', dpi=fig.dpi, bbox_inches='tight') #, dpi=fig.dpi #pdf #eps
+fig.savefig('./Figures/firing_characterization.tif', dpi=600, bbox_inches='tight') #, dpi=fig.dpi #pdf #eps
 plt.show()

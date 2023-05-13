@@ -1,3 +1,11 @@
+"""
+Script to plot summary diagram - Figure 7
+
+"""
+__author__ = "Nils A. Koch"
+__copyright__ = "Copyright 2022, Nils A. Koch"
+__license__ = "MIT"
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -5,7 +13,7 @@ import matplotlib.ticker as ticker
 from matplotlib.colors import colorConverter as cc
 from matplotlib.colors import to_hex
 import string
-from plotstyle import scheme_style
+from Figures.plotstyle import scheme_style
 import pandas as pd
 from matplotlib import cm
 
@@ -318,6 +326,6 @@ ax3.annotate('', (0.55, 55), (0.3, 90),
 ax3.text(x=0.85, y=90, s='WT',color=colorslist[9],rotation=17.5, fontsize=lfsize, weight='bold')
 ax3.text(x=0.09, y=60, s='Mutant',color=colorslist[2],rotation=53, fontsize=lfsize, weight='bold')
 
-fig.savefig('./Figures/summary_fig.jpg', dpi=300, bbox_inches='tight')  # , dpi=fig.dpi #pdf #eps
+fig.savefig('./Figures/summary_fig.tif', dpi=600, bbox_inches='tight')  # , dpi=fig.dpi #pdf #eps
 plt.show()
 

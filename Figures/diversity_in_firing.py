@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Script to plot diversity in firing - Figure 1
+
+"""
+__author__ = "Nils A. Koch"
+__copyright__ = "Copyright 2022, Nils A. Koch"
+__license__ = "MIT"
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -90,12 +99,12 @@ def plot_spike_train(ax, model='RS Pyramidal', stop=750):
     if model == 'STN':
         ax.plot(model_spiking['t'][0:stop_ind], model_spiking[model][0:stop_ind], 'k', linewidth=0.25)
     else:
-        ax.plot(model_spiking['t'][0:stop_ind], model_spiking[model][0:stop_ind], 'k', linewidth=0.5)
+        ax.plot(model_spiking['t'][0:stop_ind], model_spiking[model][0:stop_ind], 'k', linewidth=0.5) #1.5
     ax.set_ylabel('V')
     ax.set_xlabel('Time [s]')
     ax.set_ylim(-85, 60)
     ax.axis('off')
-    ax.set_title(model, fontsize=7)
+    ax.set_title(model, fontsize=7, y=1.1)
 
 
 def plot_fI(ax, model='RS Pyramidal'):
@@ -131,18 +140,16 @@ def plot_fI(ax, model='RS Pyramidal'):
 
 
 #%%
-
 # plot layout
 fig = plt.figure()
 gs0 = fig.add_gridspec(3, 3, wspace=0.4, hspace=0.2)
-
 gs00 = gs0[:,0].subgridspec(5, 2, wspace=0.8, hspace=1.5)
 gs01 = gs0[:,1].subgridspec(5, 2, wspace=0.8, hspace=1.5)
 gs02 = gs0[:,2].subgridspec(5, 2, wspace=0.8, hspace=1.5)
 
 ax_diag = fig.add_subplot(gs02[2:, :])
 import matplotlib.image as mpimg
-img = mpimg.imread('./Figures/model_diagram2.png')
+img = mpimg.imread('./Figures/model_diagram.png')
 ax_diag.imshow(img)
 ax_diag.spines['top'].set_visible(False)
 ax_diag.spines['bottom'].set_visible(False)
@@ -151,8 +158,6 @@ ax_diag.spines['right'].set_visible(False)
 ax_diag.set_yticks([])
 ax_diag.set_xticks([])
 ax_diag.text(-0.22, 1.075, string.ascii_uppercase[12], transform=ax_diag.transAxes, size=10, weight='bold')
-
-
 
 ax1_spikes = fig.add_subplot(gs00[0,0])
 ax1_fI = fig.add_subplot(gs00[0, 1])
@@ -179,10 +184,11 @@ ax11_fI = fig.add_subplot(gs00[4, 1])
 ax12_spikes = fig.add_subplot(gs01[4, 0])
 ax12_fI = fig.add_subplot(gs01[4,  1])
 
+
 spike_axs = [ax1_spikes, ax2_spikes, ax3_spikes, ax4_spikes, ax5_spikes,ax6_spikes, ax7_spikes, ax8_spikes,
               ax11_spikes,ax9_spikes,ax10_spikes,   ax12_spikes]#, ax13_spikes, ax14_spikes]
 fI_axs = [ax1_fI, ax2_fI, ax3_fI, ax4_fI, ax5_fI,ax6_fI, ax7_fI,  ax8_fI, ax11_fI, ax9_fI,  ax10_fI,
-              ax12_fI] #, ax13_fI, ax14_fI]
+              ax12_fI]
 
 # model order
 models = ['Cb stellate','RS Inhibitory','FS', 'RS Pyramidal','RS Inhibitory +$\mathrm{K}_{\mathrm{V}}\mathrm{1.1}$',
@@ -210,11 +216,10 @@ add_scalebar(ax12_spikes, matchx=False, matchy=False, hidex=True, hidey=True, si
 
 # add subplot labels
 for i in range(0,len(models)):
-    spike_axs[i].text(-0.572, 1.2, string.ascii_uppercase[i], transform=spike_axs[i].transAxes, size=10, weight='bold')
-
+    spike_axs[i].text(-0.572, 1.3, string.ascii_uppercase[i], transform=spike_axs[i].transAxes, size=10, weight='bold')
 # save
 fig.set_size_inches(cm2inch(21,15))
-fig.savefig('./Figures/diversity_in_firing_diagram.jpg', dpi=300, bbox_inches='tight') #pdf # eps
+fig.savefig('./Figures/diversity_in_firing_diagram.tif', dpi=600, bbox_inches='tight') #pdf # eps
 plt.show()
 
 

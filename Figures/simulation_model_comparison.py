@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Script to plot KCNA1 mutations - Figure 5
+Script to plot KCNA1 mutations - Figure 6
 
 """
 __author__ = "Nils A. Koch"
@@ -311,7 +311,7 @@ axr1.text(-0.27, 1.075, string.ascii_uppercase[j+1], transform=axr1.transAxes, s
 
 # save
 fig.set_size_inches(cm2inch(22.2,15))
-fig.savefig('./Figures/simulation_model_comparison.pdf', dpi=fig.dpi)
+fig.savefig('./Figures/simulation_model_comparison.tif', dpi=600)
 # fig.savefig('./Figures/simulation_model_comparison.png', dpi=fig.dpi) #png
 plt.show()
 
