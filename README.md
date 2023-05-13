@@ -1,6 +1,5 @@
 # Koch *et al.* 2023 Code Repository
-Code for simulation and figure plotting for "Loss or Gain of Function? Effects of Ion Channel Mutations on Neuronal Firing Depend on the
-Cell Type" by Koch *et al.* 2023.
+Code for simulation and figure plotting for "Loss or Gain of Function? Effects of Ion Channel Mutations on Neuronal Firing Depend on the Neuron Type" by Koch *et al.* 2023.
 Modelling on the effects of ion current property changes on firing behaviour in diverse neuronal 
 models and in with episodic ataxia type 1 associated _KCNA1_ mutations.
 
